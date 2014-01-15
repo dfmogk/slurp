@@ -16,7 +16,8 @@ import sys
 import random
 from bs4 import BeautifulSoup
 import imghdr
-from os import rename, exists
+from os.path import isdir
+from os import rename
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -119,8 +120,8 @@ if imgpagedom.find("img",{"class":"dev-content-normal"}) is None:
 print(images[imagenumber])
 
 if len(sys.argv) is 4:
-    if not exists(argv[4]):
-        print(argv[4] + " doesn't exist. :(")
-    pathname = argv[4] + (str(images[imagenumber]).rsplit("/",1)[1])
+    if not isdir(str(sys.argv[3])):
+        print(str(sys.argv[3]) + " doesn't exist. :(")
+    pathname = str(sys.argv[3]) + "/" + (str(images[imagenumber]).rsplit("/",1)[1])
     urllib.urlretrieve(imgpagedom.find("img",{"class":"dev-content-normal"}).get("src"),pathname)
     rename(pathname,pathname + "." + imghdr.what(pathname))
