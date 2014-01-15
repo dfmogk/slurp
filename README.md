@@ -21,7 +21,7 @@ Three examples showing the different modes:
 
 ![example][example]
 
-[example]:https://github.com/dfmogk/slurp/raw/master/Example.png "Example"
+[example]:https://raw.github.com/dfmogk/slurp/master/Example.png "Example"
 
 <h3>Requirements</h3>
 The requirements are Python Version 2.*+ (tested for 2.7.1 and 3.3.3 - works.), and the following libraries:
