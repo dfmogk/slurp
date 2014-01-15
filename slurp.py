@@ -11,7 +11,7 @@ Finishing Date: 14th of January, 2014
 
 '''
 
-import urllib
+from urllib.request import urlopen
 import sys
 import random
 from bs4 import BeautifulSoup
@@ -33,7 +33,7 @@ if len(sys.argv) is not 3 and len(sys.argv) is not 4:
 	print("Usage: " + sys.argv[0] + " [first | last | random] <search string>")
 	sys.exit()
 
-pagecontent = urllib.urlopen("http://www.deviantart.com/?q=" + sys.argv[2].replace(" ","+").replace(",","+")).read()
+pagecontent = urlopen("http://www.deviantart.com/?q=" + sys.argv[2].replace(" ","+").replace(",","+")).read()
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -44,7 +44,7 @@ pagecontent = urllib.urlopen("http://www.deviantart.com/?q=" + sys.argv[2].repla
 
 ''' Checking if HTML is fully loaded '''
 
-if "</html>" not in pagecontent[-10:]:
+if "</html>" not in str(pagecontent[-10:]):
 	print("Searchpage HTML failed. Dropping out...")
 	sys.exit()
 
@@ -86,9 +86,9 @@ imagelink = ""
 if "random" in sys.argv[1]:
 	imagenumber = random.randint(0,len(images) - 1) # <-- Pick a random element
 elif "first" in sys.argv[1]:
-	imagenumber = 0           # <-- Pick the first element
+	imagenumber = 0             # <-- Pick the first element
 elif "last" in sys.argv[1]:
-	imagenumber = len(images) # <-- Pick the last element
+	imagenumber = len(images)-1 # <-- Pick the last element
 
 #print "Description: " + images[imagenumber].get("alt")
 imagelink = images[imagenumber]
@@ -102,9 +102,9 @@ imagelink = images[imagenumber]
 
 ''' Now, switching to the image page so we get the high-res picture '''
 
-imgpagecontent = urllib.urlopen(imagelink).read()
+imgpagecontent = urlopen(imagelink).read()
 
-if "</html>" not in imgpagecontent[-10:]:
+if "</html>" not in str(imgpagecontent[-10:]):
 	print("Image Page HTML failed. Dropping out...")
 	sys.exit()
 imgpagedom = BeautifulSoup(imgpagecontent)
