@@ -11,7 +11,7 @@ Finishing Date: 14th of January, 2014
 
 '''
 
-from urllib.request import urlopen
+from urllib.request import urlopen, urlretrieve
 import sys
 import random
 from bs4 import BeautifulSoup
@@ -123,5 +123,5 @@ if len(sys.argv) is 4:
     if not isdir(str(sys.argv[3])):
         print(str(sys.argv[3]) + " doesn't exist. :(")
     pathname = str(sys.argv[3]) + "/" + (str(images[imagenumber]).rsplit("/",1)[1])
-    urllib.urlretrieve(imgpagedom.find("img",{"class":"dev-content-normal"}).get("src"),pathname)
+    urlretrieve(imgpagedom.find("img",{"class":"dev-content-normal"}).get("src"),pathname)
     rename(pathname,pathname + "." + imghdr.what(pathname))
