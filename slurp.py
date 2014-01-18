@@ -5,19 +5,38 @@ Finishing Date: 14th of January, 2014
        License: GPL3 (the script)
        Creator: dfmogk (digitalforest.dyndns.org)
    Description: Just getting pictures from deviantart.
-   				Get an image for any search string.
-   				Random, first, or last supported. =)
+                Get an image for any search string.
+                Random, first, or last supported. =)
 
 
 '''
 
-from urllib.request import urlopen, urlretrieve
 import sys
-import random
-from bs4 import BeautifulSoup
-import imghdr
-from os.path import isdir
-from os import rename
+
+# It appears that the script is for Python3, based on the print() statements.
+# And I suspect that the packaged urllib in Python3 has a request component
+# that is not included/does not work the same way in Python2.x. So I included
+# these try-except blocks so that the script works in Python2 as well.
+
+try:
+    from urllib.request import urlopen, urlretrieve
+    # Python 3+, urlopen and urlretreive were moved to urllib.request
+except ImportError:
+    try:
+    	# Python 2.*
+        from urllib import urlopen, urlretrieve
+    except:
+        print("Cannot import urlopen and urlretrieve.")
+        sys.exit()
+except:
+    print("Cannot import urlopen and urlretrieve.")
+    sys.exit()
+
+import random # for "random" mode
+import imghdr # to get the image suffix through MIME-type
+from bs4 import BeautifulSoup # to XS the DOM
+from os.path import isdir # to check the target directory if downloading 
+from os import rename # to add the suffix.
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -57,11 +76,11 @@ if pagedom is None:
 	sys.exit()
 
 ''' Checking if any image tile is present (should've got class="t" ) '''
-if pagedom.find_all("a",{"class":"t"}) is None:
+if pagedom.find_all("a", {"class":"t"}) is None:
 	print("Searchpage Element not found. Dropping out...")
 	sys.exit()
 
-elements = pagedom.find_all("a",{"class":"t"})
+elements = pagedom.find_all("a", {"class":"t"})
 # t = title (is a)
 
 images = []
