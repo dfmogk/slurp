@@ -1,4 +1,4 @@
-slurp.py
+slurp.py ![pythonlogo][pythonlogo]
 ========
 Gets a random image from deviantart, based on a search string.
 
@@ -30,5 +30,4 @@ The requirements are Python Version 2.*+ (tested for 2.7.1 and 3.3.3 - works.), 
 
 `bs4` is likely the only one you'll need to install. Do this by executing `$ pip install BeautifulSoup` in your terminal.
 
-![pythonlogo][pythonlogo]
 [pythonlogo]:http://www.python.org/community/logos/python-powered-w-70x28.png "Python Logo"
