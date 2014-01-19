@@ -3,7 +3,8 @@
  Creation Date: 14th of January, 2014
 Finishing Date: 14th of January, 2014
        License: GPL3 (the script)
-       Creator: dfmogk (digitalforest.dyndns.org)
+       Made by: dfmogk (digitalforest.dyndns.org)
+       		samhain13 (abcruz.com)
    Description: Just getting pictures from deviantart.
                 Get an image for any search string.
                 Random, first, or last supported. =)
@@ -13,10 +14,8 @@ Finishing Date: 14th of January, 2014
 
 import sys
 
-# It appears that the script is for Python3, based on the print() statements.
-# And I suspect that the packaged urllib in Python3 has a request component
-# that is not included/does not work the same way in Python2.x. So I included
-# these try-except blocks so that the script works in Python2 as well.
+
+# For Python2/Python3 compatibility
 
 try:
     from urllib.request import urlopen, urlretrieve
@@ -32,18 +31,11 @@ except:
     print("Cannot import urlopen and urlretrieve.")
     sys.exit()
 
-import random # for "random" mode
-import imghdr # to get the image suffix through MIME-type
+import random                 # for "random" mode
+import imghdr                 # to get the image suffix through MIME-type
 from bs4 import BeautifulSoup # to XS the DOM
-from os.path import isdir # to check the target directory if downloading 
-from os import rename # to add the suffix.
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+from os.path import isdir     # to check the target directory if downloading 
+from os import rename         # to add the suffix.
 
 ''' Checking arguments. No defaults for now. '''
 
@@ -53,13 +45,6 @@ if len(sys.argv) is not 3 and len(sys.argv) is not 4:
 	sys.exit()
 
 pagecontent = urlopen("http://www.deviantart.com/?q=" + sys.argv[2].replace(" ","+").replace(",","+")).read()
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 ''' Checking if HTML is fully loaded '''
 
@@ -88,15 +73,7 @@ images = []
 for tmpObject in elements:
 	''' Going through every element present which is an image tile. '''
 	if tmpObject is not None:
-		#print tmpObject.get("title"),"\t",tmpObject.get("href")
 		images.append(tmpObject.get("href"))
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 ''' Checking which element we should send out. '''
 
@@ -109,15 +86,7 @@ elif "first" in sys.argv[1]:
 elif "last" in sys.argv[1]:
 	imagenumber = len(images)-1 # <-- Pick the last element
 
-#print "Description: " + images[imagenumber].get("alt")
 imagelink = images[imagenumber]
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 ''' Now, switching to the image page so we get the high-res picture '''
 
@@ -136,7 +105,9 @@ if imgpagedom.find("img",{"class":"dev-content-normal"}) is None:
 	print("Image Page Element not found. Dropping out...")
 	sys.exit()
 
-print(images[imagenumber])
+# print description and link
+
+print(str(imgpagedom.find_all("title"))[8:][:-23] + ", " + images[imagenumber])
 
 if len(sys.argv) is 4:
     if not isdir(str(sys.argv[3])):
