@@ -3,8 +3,7 @@
  Creation Date: 14th of January, 2014
 Finishing Date: 14th of January, 2014
        License: GPL3 (the script)
-       Made by: dfmogk (digitalforest.dyndns.org)
-       		samhain13 (abcruz.com)
+       Made by: dfmogk (digitalforest.dyndns.org), samhain13 (abcruz.com)
    Description: Just getting pictures from deviantart.
                 Get an image for any search string.
                 Random, first, or last supported. =)
